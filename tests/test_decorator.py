@@ -107,10 +107,10 @@ def beam(w, L):
     return M
 
 
-def test_arguments_docstring_and_leading_comments_are_rendered():
+def test_arguments_and_leading_comments_are_rendered_without_docstring():
     value, rendered = beam(5, 6)
     assert value == 22.5
-    assert "Simply supported beam." in rendered
+    assert "Simply supported beam." not in rendered
     assert "Midspan moment" in rendered
     assert r"M &= \frac{w \cdot L^{2}}{8} = \frac{5 \cdot 6^{2}}{8} = 22.5" in rendered
 

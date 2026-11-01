@@ -42,6 +42,15 @@ def function_body(func) -> tuple[str, int]:
     # ``getsource`` starts at the first line of the code object (its first
     # decorator, if any).
     file_offset = func.__code__.co_firstlineno - 1
+    if ast.get_docstring(node) is not None:
+        node.body.pop(0)
+        if not node.body:
+            return "", file_offset
+        first = node.body[0]
+        if first.lineno != node.lineno:
+            lines[first.lineno - 1] = (
+                " " * first.col_offset + lines[first.lineno - 1][first.col_offset :]
+            )
     first = node.body[0]
     if first.lineno == node.lineno:
         # A one-line def (``def f(x): return x * 2``): the body shares the def line.
